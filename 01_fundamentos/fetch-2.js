@@ -1,5 +1,9 @@
 
-
+/**
+ * FETCH
+ * documentation
+ * @link https://developer.mozilla.org/en-US/docs/Web/API/Response
+ */
 
 fetch( "https://reqres.in/api/users")
     .then( data => data.json())
