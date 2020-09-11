@@ -1,12 +1,11 @@
 self.addEventListener('fetch', event => {
-
-    console.log('fetch: ', event )
-
-    if ( event.request.url.includes('style.css') ) {
-        event.respondWith( null )
-
+    // step: 1
+    if (event.request.url.includes('.jpg')) {
+        // let defaultImg = null;
+        let defaultImg = fetch( event.request.url);        
+        event.respondWith(defaultImg)
     }
 
-    event.respondWith( fetch( event.request ) )
+    
 
 });
