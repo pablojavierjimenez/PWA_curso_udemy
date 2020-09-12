@@ -7,20 +7,29 @@ self.addEventListener('fetch', event => {
     // }
 
     //step: 2
-    if ( event.request.url.includes( 'style.css' ) ) {
+    // if ( event.request.url.includes( 'style.css' ) ) {
 
-        let res = new Response(`
-            body {
-                background-color: red !important;
-                color: black;
-            }
-        `,{
-            headers: {
-                'Content-Type': 'text/css'
-            }
-        });
+    //     let res = new Response(`
+    //         body {
+    //             background-color: red !important;
+    //             color: black;
+    //         }
+    //     `,{
+    //         headers: {
+    //             'Content-Type': 'text/css'
+    //         }
+    //     });
 
-        event.respondWith( res );
+    //     event.respondWith( res );
+    // }
+
+    // step: 3
+
+    if ( event.request.url.includes('main.jpg')) {
+
+        let defaultImage = fetch('img/main-patas-arriba.jpg');
+
+        event.respondWith( defaultImage );
+    
     }
-
 });
