@@ -4,3 +4,7 @@
 if ( navigator.serviceWorker ) {
     navigator.serviceWorker.register('./sw.js');
 }
+
+fetch('https://reqres.in/api/users')
+    .then( (res) => res.text() )
+    .then( data => console.log('users: ', data))
