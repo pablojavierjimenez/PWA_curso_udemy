@@ -24,12 +24,14 @@ self.addEventListener('fetch', event => {
     // }
 
     // step: 3
+    // if ( event.request.url.includes('main.jpg')) {
+    //     let defaultImage = fetch('img/main-patas-arriba.jpg');
+    //     event.respondWith( defaultImage );
+    // }
 
-    if ( event.request.url.includes('main.jpg')) {
+    // Step: 4 manejo de errores
+    const getImage = fetch(event.request)
+                .then( res => res.ok ? res : fetch('./img/main.jpg') )
 
-        let defaultImage = fetch('img/main-patas-arriba.jpg');
-
-        event.respondWith( defaultImage );
-    
-    }
+    event.respondWith( getImage )
 });
