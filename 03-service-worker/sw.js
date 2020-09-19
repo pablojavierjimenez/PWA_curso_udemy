@@ -81,6 +81,12 @@ self.addEventListener('fetch', event => {
 self.addEventListener('sync', event => {
     
     console.log('Tenemos coneccion')
-    console.log(event)
+    // console.log(event)
     console.log(event.tag)
 })
+
+// PUSH: manejar las push notifications
+
+self.addEventListener('push', event => {
+    console.log('Notificacion recibida')
+});
