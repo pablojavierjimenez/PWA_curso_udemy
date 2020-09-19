@@ -60,19 +60,27 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     //  Aplicar la estrategias del cache
-
-    console.log('SW: fetch', event.request.url)
-
-    if (event.request.url.includes('https://reqres.in/')) {
-        
-        const newRes = new Response(
-            JSON.stringify({ok: false, message: 'forbbiden'}),
-            {
-                headers: {'content-type': 'application/json'}
-            }
-        );
-
-        event.respondWith( newRes );
-    }
     
+    // console.log('SW: fetch', event.request.url)
+    
+    // if (event.request.url.includes('https://reqres.in/')) {
+        
+        //     const newRes = new Response(
+            //         JSON.stringify({ok: false, message: 'forbbiden'}),
+            //         {
+                //             headers: {'content-type': 'application/json'}
+                //         }
+                //     );
+                
+                //     event.respondWith( newRes );
+                // }
+                
+            })
+            
+// SYNC: es cuando recuperamos la coneccion a internet
+self.addEventListener('sync', event => {
+    
+    console.log('Tenemos coneccion')
+    console.log(event)
+    console.log(event.tag)
 })
