@@ -11,6 +11,7 @@
         .then( cache => {
 
             return cache.addAll([
+                '/',
                 '/index.html',
                 '/js/app.js',
                 '/css/style.css',
@@ -20,4 +21,16 @@
         });
 
     ev.waitUntil( appShell )
+ });
+
+
+ /*
+  * estrategias de cache
+  */
+ self.addEventListener('fetch', ev => {
+
+    /**
+     * ESTRATEGIA 1: Cache Only
+     */
+    ev.respondWith( caches.match( ev.request ) )
  })
