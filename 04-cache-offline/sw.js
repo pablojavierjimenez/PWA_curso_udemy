@@ -50,5 +50,4 @@ self.addEventListener('fetch', event => {
 
 
     event.respondWith( res );
-    console.log(event);
 })
