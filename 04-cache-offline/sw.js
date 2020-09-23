@@ -7,10 +7,24 @@
 
 
 
-const CACHE_STATIC = 'static_v1';
+const CACHE_STATIC = 'static_v2';
 const CACHE_DYNAMIC = 'dynamic_v1';
 const CACHE_INMUTABLE = 'inmutable_v1';
 
+function cleanCache( cacheName, totalItems) {
+
+    caches.open(cacheName)
+        .then( cache => {
+            return cache.keys()
+                .then( keys => {
+                    if ( keys.length > totalItems ) {
+                        
+                        cache.delete( keys[0] )
+                            .then(cleanCache(cacheName, totalItems))
+                    }
+                })
+        })
+}
 
 self.addEventListener('install', ev => {
 
@@ -47,13 +61,14 @@ self.addEventListener('fetch', ev => {
     * si el archivo no se encuentra en el Cache
     * recien ahi ir a buscarlo a la internet
     */
+
    const requestedFile =  caches.match( ev.request )
        .then( res => {
            if ( res ) return res;
 
            // pero si el archivo no existe en cache
            // tengo que ir a buscarlo en la web
-           console.log('no existe en el cache', ev.request.url);
+           //console.log('no existe en el cache', ev.request.url);
 
            return fetch( ev.request )
                    .then( newRes => {
@@ -64,6 +79,7 @@ self.addEventListener('fetch', ev => {
                        caches.open( CACHE_DYNAMIC )
                            .then( cache => {
                                cache.put( ev.request, newRes );
+                               cleanCache( CACHE_DYNAMIC, 4);
                            });
                        return newRes.clone();
                    });
