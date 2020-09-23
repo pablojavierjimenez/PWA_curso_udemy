@@ -4,24 +4,33 @@
  * APP SHELL: es todo aquello que si o si necesita nuestra app
  * para funcionar, offline y puede variar mucho segun cada aplicacion
  */
-const CACHE_NAME = 'appshell_v1';
- self.addEventListener('install', ev => {
 
-    const appShell = caches.open('appshell_v1')
-        .then( cache => {
 
-            return cache.addAll([
-                '/',
-                '/index.html',
-                '/js/app.js',
-                '/css/style.css',
-                'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'
-            ]);
 
-        });
+const CACHE_STATIC = 'static_v1';
+const CACHE_DYNAMIC = 'dynamic_v1';
+const CACHE_INMUTABLE = 'inmutable_v1';
 
-    ev.waitUntil( appShell )
- });
+
+self.addEventListener('install', ev => {
+
+    const appShell = caches.open(CACHE_STATIC).then( cache => {
+
+        return cache.addAll([
+            '/',
+            '/index.html',
+            '/js/app.js',
+            '/css/style.css'
+        ]);
+    });
+    
+    const cacheDynamic = caches.open( CACHE_INMUTABLE ).then( cache => {
+        cache.addAll(['https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css']) 
+    });
+
+
+    ev.waitUntil( Promise.all([appShell, cacheDynamic]) );
+});
 
 /*
  * estrategias de cache
@@ -52,7 +61,7 @@ self.addEventListener('fetch', ev => {
                         // con esta parte lo que hacemos es que si ese archivo
                         // que no teniamos en cache, ademas de ir a buscarlo a internet,
                         // lo agregamos al cache para la proxima
-                       caches.open(CACHE_NAME)
+                       caches.open( CACHE_DYNAMIC )
                            .then( cache => {
                                cache.put( ev.request, newRes );
                            });
