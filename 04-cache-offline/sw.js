@@ -42,9 +42,17 @@ self.addEventListener('fetch', (ev) => {
         /**
          * ESTRATEGIA 3: Network Fallback with Cache Fallback
          */
-        const response = networkWithCacheFallback(ev);
+        // const response = networkWithCacheFallback(ev);
+        
+        /**
+         * ESTRATEGIA 4: Cache With Network Update
+         */
+        if (ev.request.url.includes('bootstrap') ) {
+            ev.respondWith( caches.match( ev.request))
+        }
+        const response = cacheWithNetworkUpdate(ev);
 
-        ev.respondWith(response);
+        ev.respondWith( response );
     }
 });
 
@@ -107,3 +115,11 @@ function networkWithCacheFallback(ev) {
     return response;
 }
 
+function cacheWithNetworkUpdate(ev) {
+    return caches.open(CACHE_STATIC).then( cache => {
+        
+        fetch( ev.request ).then( res => cache.put( ev.request, res ) );
+
+        return cache.match( ev.request );
+    })
+}
