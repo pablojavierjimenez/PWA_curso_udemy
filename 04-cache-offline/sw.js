@@ -10,7 +10,13 @@ const CACHE_DYNAMIC_LIMIT = 10;
 
 self.addEventListener('install', (ev) => {
     const appShell = caches.open(CACHE_STATIC).then((cache) => {
-        return cache.addAll(['/', '/index.html', '/js/app.js', '/css/style.css']);
+        return cache.addAll([
+            '/',
+            '/index.html',
+            '/js/app.js',
+            '/css/style.css',
+            '/img/no-img.jpg'
+        ]);
     });
 
     const cacheDynamic = caches.open(CACHE_INMUTABLE).then((cache) => {
@@ -47,10 +53,16 @@ self.addEventListener('fetch', (ev) => {
         /**
          * ESTRATEGIA 4: Cache With Network Update
          */
-        if (ev.request.url.includes('bootstrap') ) {
-            ev.respondWith( caches.match( ev.request))
-        }
-        const response = cacheWithNetworkUpdate(ev);
+        // if (ev.request.url.includes('bootstrap') ) {
+        //     ev.respondWith( caches.match( ev.request))
+        // }
+        // const response = cacheWithNetworkUpdate(ev);
+        
+        /**
+         * ESTRATEGIA 5: Cache and Network Race
+         */
+        const response = cacheAndNetworkRace(ev);
+
 
         ev.respondWith( response );
     }
@@ -122,4 +134,37 @@ function cacheWithNetworkUpdate(ev) {
 
         return cache.match( ev.request );
     })
+}
+
+function cacheAndNetworkRace(ev) {
+
+    return new Promise( (resolve, reject) => {
+        let isRrejected = false;
+
+        const requestFail = () => {
+            if ( isRrejected ) {
+                if ( /\.(png|jpg)$/i.test( ev.request.url ) ) {
+
+                    resolve( caches.match( '/img/no-img.jpg') );                
+                } else {
+                    reject('no se encontro el archivo')
+                    
+                }
+            } else {
+                isRrejected = true;
+            }
+        };
+
+
+        fetch( ev.request )
+            .then( res => {
+                res.ok ? resolve(res) : requestFail();
+            })
+            .catch( requestFail );
+
+        caches.match( ev.request ).then( res => {
+            res ? resolve(res) : requestFail();
+        });
+        
+    });
 }
