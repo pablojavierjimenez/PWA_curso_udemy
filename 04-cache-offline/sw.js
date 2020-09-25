@@ -78,7 +78,6 @@ function cleanCache(cacheName, totalItems) {
     });
 }
 
-
 function cacheOnly(ev) {
     return ev.respondWith(caches.match(ev.request));
 }
