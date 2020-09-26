@@ -1,7 +1,7 @@
 
 
 const CACHE_INMUTABLE = "cache-inmutable_v3";
-const CACHE_STATIC = "cache-static_v3";
+const CACHE_STATIC = "cache-static_v2";
 const CACHE_DINAMYC = "cache-dinamyc_v3";
 
 self.addEventListener('install', event => {
@@ -41,6 +41,18 @@ self.addEventListener('fetch', event => {
                     })
 
                     return newRes.clone();
+                })
+                .catch( err => {
+                    console.log('fetcherror: ',err)
+
+                    if ( event.request.headers.get('accept').includes('text/html') ) {
+                        
+                        console.log('no se encontro este html: ', event.request.url)
+                        return caches.match('/pages/offline.html')
+                            // .then( cache => {
+                            //     return new Response(cache);
+                            // })
+                    }
                 })
         })
 
