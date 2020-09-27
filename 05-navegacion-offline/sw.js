@@ -1,7 +1,7 @@
 
 
 const CACHE_INMUTABLE = "cache-inmutable_v3";
-const CACHE_STATIC = "cache-static_v2";
+const CACHE_STATIC = "cache-static_v4";
 const CACHE_DINAMYC = "cache-dinamyc_v3";
 
 self.addEventListener('install', event => {
@@ -25,6 +25,23 @@ self.addEventListener('install', event => {
     //event.respondWith( new Promise.all([cacheStatic, cacheInmutable]))
     
 })
+
+self.addEventListener('activate', ev => {
+
+    const response = caches.keys().then( keys => {
+
+        keys.forEach( key => {
+            if ( 
+                key !== CACHE_STATIC
+                && key.includes('static')
+            ) {
+                caches.delete(key);
+            }
+        })
+    })
+    ev.waitUntil(response);
+})
+
 
 self.addEventListener('fetch', event => {
 
