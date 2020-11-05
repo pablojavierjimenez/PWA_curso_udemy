@@ -1,4 +1,11 @@
 
+if (navigator.serviceWorker) {
+    navigator.serviceWorker.register('/06-twittor/sw.js');
+}
+
+
+
+
 // Referencias de jQuery
 
 var titulo      = $('#titulo');
