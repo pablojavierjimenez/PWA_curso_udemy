@@ -1,3 +1,7 @@
+// IMPORTS
+importScripts('./swrvice-worker/_helpers.sw.js');
+/*****************/
+
 
 /**
  * TODO: creart un objeto 
@@ -7,7 +11,7 @@
  * }
  */
 const STATIC_CACHE = "static-v1";
-const DINAMIC_CACHE = "dynamic-v1";
+const DYNAMIC_CACHE = "dynamic-v1";
 const INMUTABLE_CACHE = "inmutable-v1";
 
 /**
@@ -33,6 +37,9 @@ const APP_SHELL_INMUTABLE = [
 ];
 
 
+/**
+ * INSTALLATION
+ */
 self.addEventListener('install', event => {
     const cacheStatic = caches.open( STATIC_CACHE )
         .then( cache => cache.addAll( APP_SHELL ) );
@@ -43,6 +50,9 @@ self.addEventListener('install', event => {
     );
 });
 
+/**
+ * ACTIVATE
+ */
 self.addEventListener('activate', event => {
 
     const response = caches.keys().then( keys => {
@@ -54,4 +64,30 @@ self.addEventListener('activate', event => {
     });
 
     event.waitUntil(response);
+});
+
+
+/**
+ * FETCH STRATEGY
+ */
+self.addEventListener('fetch', event => {
+
+    const response = caches.match( event.request ).then( res => {
+
+        if ( res ) {
+            return res;
+        } else {
+            console.log(event.request.url);
+            return fetch( event.request )
+                .then( newRes => {
+                    return updateDynamicCache( DYNAMIC_CACHE, event.request, newRes );
+                })
+        }
+    })
+
+
+
+
+    event.respondWith( response );
+    event.waitUntil( response );
 });

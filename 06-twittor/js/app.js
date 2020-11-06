@@ -1,8 +1,24 @@
 
-if (navigator.serviceWorker) {
-    navigator.serviceWorker.register('/06-twittor/sw.js');
-}
+/**
+ * gran tutorial de angular y de todo pwa
+ * @link https://www.adictosaltrabajo.com/2017/10/17/pwa-y-services-worker-en-angular/#crayon-5fa3d15525326817657454
+ */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(function (reg) {
 
+      if (reg.installing) {
+        console.log('Service worker installing');
+      } else if (reg.waiting) {
+        console.log('Service worker installed');
+      } else if (reg.active) {
+        console.log('Service worker active');
+      }
+
+    }).catch(function (error) {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+  }
 
 
 
