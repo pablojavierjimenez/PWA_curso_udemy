@@ -85,5 +85,4 @@ self.addEventListener('fetch', event => {
     })
 
     event.respondWith( response );
-    event.waitUntil( response );
 });
