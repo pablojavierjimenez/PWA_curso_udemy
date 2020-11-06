@@ -73,7 +73,6 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
 
     const response = caches.match( event.request ).then( res => {
-
         if ( res ) {
             return res;
         } else {
@@ -84,9 +83,6 @@ self.addEventListener('fetch', event => {
                 })
         }
     })
-
-
-
 
     event.respondWith( response );
     event.waitUntil( response );
