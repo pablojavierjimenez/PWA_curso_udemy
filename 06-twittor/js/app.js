@@ -4,7 +4,9 @@
  * @link https://www.adictosaltrabajo.com/2017/10/17/pwa-y-services-worker-en-angular/#crayon-5fa3d15525326817657454
  */
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(function (reg) {
+
+    let swerviceWorkerPath = location.origin + location.pathname + 'sw.js';
+    navigator.serviceWorker.register(swerviceWorkerPath).then(function (reg) {
 
       if (reg.installing) {
         console.log('Service worker installing');
