@@ -1,5 +1,5 @@
 // IMPORTS
-importScripts('./swrvice-worker/_helpers.sw.js');
+importScripts('https://raw.githubusercontent.com/pablojavierjimenez/PWA_curso_udemy/seccion/7/05_DespliegueEnDispositivos/docs/swrvice-worker/_helpers.sw.js');
 /*****************/
 
 
