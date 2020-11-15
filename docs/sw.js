@@ -1,5 +1,5 @@
 // IMPORTS
-importScripts('/swrvice-worker/_helpers.sw.js');
+importScripts('./swrvice-worker/_helpers.sw.js');
 /*****************/
 
 
