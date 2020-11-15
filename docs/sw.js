@@ -2,8 +2,6 @@
 importScripts('swrvice-worker/_helpers.sw.js');
 /*****************/
 
-// var worker = new Worker('./swrvice-worker/_helpers.sw.js');
-import * as filters from './swrvice-worker/_helpers.sw.js'
 /**
  * TODO: creart un objeto 
  * const CACHE = {
