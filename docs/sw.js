@@ -2,7 +2,7 @@
 importScripts('https://raw.githubusercontent.com/pablojavierjimenez/PWA_curso_udemy/seccion/7/05_DespliegueEnDispositivos/docs/swrvice-worker/_helpers.sw.js');
 /*****************/
 
-
+var worker = new Worker('./swrvice-worker/_helpers.sw.js');
 /**
  * TODO: creart un objeto 
  * const CACHE = {
@@ -41,6 +41,7 @@ const APP_SHELL_INMUTABLE = [
  * INSTALLATION
  */
 self.addEventListener('install', event => {
+    worker.updateDynamicCache();
     const cacheStatic = caches.open( STATIC_CACHE )
         .then( cache => cache.addAll( APP_SHELL ) );
     const cacheInmutable = caches.open( INMUTABLE_CACHE )
