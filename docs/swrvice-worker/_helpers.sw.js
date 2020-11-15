@@ -2,7 +2,7 @@
  *
  */
 
-function updateDynamicCache(dynamicCache, req, res) {
+export function updateDynamicCache(dynamicCache, req, res) {
     console.log('se ejecuto el helper');
     if ( res.ok ) {
         caches.open( dynamicCache ).then( cache => {
