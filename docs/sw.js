@@ -1,5 +1,5 @@
 // IMPORTS
-importScripts('./swrvice-worker/_helpers.sw.js');
+importScripts('swrvice-worker/_helpers.sw.js');
 /*****************/
 
 
@@ -26,7 +26,8 @@ const APP_SHELL = [
     'index.html',
     '/css/style.css',
     'js/app.js',
-    'img/favicon.ico'
+    'img/favicon.ico',
+    'swrvice-worker/_helpers.sw.js'
 ];
 
 const APP_SHELL_INMUTABLE = [
