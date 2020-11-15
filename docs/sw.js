@@ -1,8 +1,9 @@
 // IMPORTS
-importScripts('https://raw.githubusercontent.com/pablojavierjimenez/PWA_curso_udemy/seccion/7/05_DespliegueEnDispositivos/docs/swrvice-worker/_helpers.sw.js');
+// importScripts('https://raw.githubusercontent.com/pablojavierjimenez/PWA_curso_udemy/seccion/7/05_DespliegueEnDispositivos/docs/swrvice-worker/_helpers.sw.js');
 /*****************/
 
-var worker = new Worker('./swrvice-worker/_helpers.sw.js');
+// var worker = new Worker('./swrvice-worker/_helpers.sw.js');
+import * as filters from './swrvice-worker/_helpers.sw.js'
 /**
  * TODO: creart un objeto 
  * const CACHE = {
